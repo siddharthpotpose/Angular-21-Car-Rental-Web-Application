@@ -122,6 +122,7 @@ export class Vehicles {
   openDeleteModal(carId: number): void {
     this.showDeleteModal = true;
     this.selectedCarId = carId;
+    console.log('Selected Car ID for deletion:', this.selectedCarId);
   }
 
   closeDeleteModal(): void {

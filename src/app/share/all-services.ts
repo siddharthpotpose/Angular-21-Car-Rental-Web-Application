@@ -31,9 +31,27 @@ export class AllServices {
     })
   }
 
-  //   DeleteCarbyCarId(carId: number) {
-  //   return this.http.delete(`${environment.apiUrl}/${apiNames.DeleteCarbyCarId}/${carId}`);
-  // }
+  //  get customer details
+
+  GetCustomers() {
+    return this.http.get(`${environment.apiUrl}/${apiNames.GetCustomers}`)
+  }
+
+  CreateNewCustomer(requestBody: any) {
+    return this.http.post(`${environment.apiUrl}/${apiNames.CreateNewCustomer}`, requestBody)
+  }
+
+  UpdateCustomer(requestBody:any){
+  return this.http.put(`${environment.apiUrl}/${apiNames.UpdateCustomer}`,requestBody)
+  }
+
+  DeleteCustomerById(customerId : number | string){
+  const id = Number(customerId);
+  return this.http.delete(`${environment.apiUrl}/${apiNames.DeletCustomerById}`,{
+    params : {id: String(id)}
+  })
+  }
+
 
 
 
