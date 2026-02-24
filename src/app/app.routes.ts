@@ -23,7 +23,7 @@ export const routes: Routes = [
                 component: Dashboard
             },
             {
-                path: 'vehciles',
+                path: 'vehicles',
                 component: Vehicles
             }
         ]

@@ -1,1 +1,95 @@
-<p>layout works!</p>
+<div
+  class="admin-shell"
+  [class.sidebar-collapsed]="isSidebarCollapsed"
+  [class.mobile-sidebar-open]="isMobileSidebarOpen"
+>
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <div class="brand-icon"><i class="fa fa-shield"></i></div>
+      <div class="brand-text">
+        <h2>AdminPanel</h2>
+        <p>Control Center</p>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="nav-item" [routerLink]="'/dashboard'">
+        <i class="fa fa-th-large"></i>
+        <span >Dashboard</span>
+      </a>
+      <a class="nav-item" [routerLink]="'/vehicles'">
+        <i class="fa fa-car"></i>
+        <span >Vehicles</span>
+      </a>
+      <a class="nav-item" href="#">
+        <i class="fa fa-calendar"></i>
+        <span>Bookings</span>
+      </a>
+      <a class="nav-item" href="#">
+        <i class="fa fa-users"></i>
+        <span>Customers</span>
+      </a>
+      <a class="nav-item" href="#">
+        <i class="fa fa-line-chart"></i>
+        <span>Reports</span>
+      </a>
+      <a class="nav-item" href="#">
+        <i class="fa fa-cog"></i>
+        <span>Settings</span>
+      </a>
+    </nav>
+  </aside>
+
+  <div class="content-wrapper">
+    <header class="top-navbar">
+      <div class="left-actions">
+        <button class="toggle-btn" type="button" (click)="toggleSidebar()" aria-label="Toggle sidebar">
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="app-title">
+          <h1>Car Rental Admin</h1>
+          <p>Operations dashboard overview</p>
+        </div>
+      </div>
+
+      <div class="right-actions">
+        <div class="logo-name">
+          <i class="fa fa-car"></i>
+          <span>CarRental Pro</span>
+        </div>
+
+        <button class="icon-btn" type="button" aria-label="Notifications">
+          <i class="fa fa-bell-o"></i>
+          <span class="notification-dot"></span>
+        </button>
+
+        <div class="admin-user">
+          <div class="avatar">A</div>
+          <div class="user-meta">
+            <strong>Admin Name</strong>
+            <span>Super Admin</span>
+          </div>
+        </div>
+
+        <button class="logout-btn" type="button">
+          <i class="fa fa-sign-out"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content">
+     
+
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <button
+    type="button"
+    class="sidebar-backdrop"
+    [class.show]="isMobileSidebarOpen"
+    (click)="closeMobileSidebar()"
+    aria-label="Close sidebar"
+  ></button>
+</div>

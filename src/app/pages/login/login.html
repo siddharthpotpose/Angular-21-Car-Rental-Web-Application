@@ -1,1 +1,67 @@
-<p>login works!</p>
+<section class="login-page">
+  <div class="container">
+    <div class="row justify-content-center align-items-center min-vh-100 py-4">
+      <div class="col-12 col-md-10 col-lg-9 col-xl-8">
+        <div class="login-card shadow-lg">
+          <div class="row g-0">
+            <div class="col-lg-5 d-none d-lg-flex">
+              <div class="brand-panel w-100">
+                <div class="brand-content">
+                  <div class="brand-icon">
+                    <i class="fa fa-car" aria-hidden="true"></i>
+                  </div>
+                  <h2>CarRental Pro</h2>
+                  <p>Manage bookings, fleet availability, and customer journeys from one place.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-7">
+              <div class="form-panel">
+                <div class="mobile-brand d-lg-none">
+                  <i class="fa fa-car" aria-hidden="true"></i>
+                  <span>CarRental Pro</span>
+                </div>
+
+                <h3>Welcome Back</h3>
+                <p class="subtext">Sign in to continue to your dashboard</p>
+
+                <form [formGroup]="loginForm">
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <div class="input-group custom-input">
+                      <span class="input-group-text"><i class="fa fa-envelope-o"></i></span>
+                      <input id="email" type="email" class="form-control" formControlName="emailid" required
+                        placeholder="name@company.com" />
+                    </div>
+                    @if(loginForm.get('emailid')?.touched && loginForm.get('emailid')?.invalid){
+                    @if(loginForm.get('emailid')?.errors?.['required']){
+                    <div class="text-danger">email is required</div>
+                    }
+                    }
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group custom-input">
+                      <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                      <input id="password" type="password" formControlName="password" required class="form-control"
+                        placeholder="Enter password" />
+
+                    </div>
+                    @if(loginForm.get('password')?.touched && loginForm.get('password')?.invalid){
+                    @if(loginForm.get('password')?.errors?.['required']){
+                    <div class="text-danger">password is required</div>
+                    }
+                    }
+                  </div>
+                  <button type="button" (click)="submitLogin()" class="btn btn-login w-100">Sign In</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

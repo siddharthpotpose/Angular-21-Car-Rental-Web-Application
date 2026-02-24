@@ -1,1 +1,325 @@
 /* You can add global styles to this file, and also import other style files */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.page-card {
+  background: #ffffff;
+  border: 1px solid #dbe2ee;
+  border-radius: 0.9rem;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.page-card h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1.06rem;
+  font-weight: 700;
+}
+
+.page-card p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.55;
+}
+
+.master-ui-wrap {
+  width: 100%;
+}
+
+.master-card {
+  background: #ffffff;
+  border: 1px solid #d7e0ec;
+  border-radius: 0.95rem;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+  overflow: hidden;
+}
+
+.master-card-header {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid #dce5f1;
+  background: linear-gradient(180deg, #f8fbff 0%, #f3f7fc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.master-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.master-subtitle {
+  margin: 0.2rem 0 0;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.master-card-body {
+  padding: 0.9rem 1rem 1rem;
+}
+
+.master-toolbar {
+  margin-bottom: 0.75rem;
+}
+
+.master-toolbar-row {
+  min-height: 34px;
+}
+
+.master-search {
+  min-width: 220px;
+}
+
+.master-search .input-group-text {
+  background: #f7f9fc;
+  border-color: #d8e1ee;
+  color: #64748b;
+}
+
+.master-search .form-control {
+  border-color: #d8e1ee;
+}
+
+.master-search .form-control:focus {
+  box-shadow: none;
+  border-color: #38bdf8;
+}
+
+.master-select-label {
+  font-size: 0.79rem;
+  color: #475569;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.master-select {
+  min-width: 72px;
+  border-color: #d8e1ee;
+}
+
+.master-btn-primary {
+  background: #0f172a;
+  border: none;
+  color: #ffff;
+  font-weight: 600;
+  font-size: 0.83rem;
+  padding: 0.5rem 0.74rem;
+  border-radius: 0.65rem;
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.master-btn-primary:hover,
+.master-btn-primary:focus,
+.master-btn-primary:active {
+  background: #111d36;
+  color: #ffffff;
+}
+
+.master-btn-neutral {
+  border: 1px solid #cfd9e8;
+  background: #f8fbff;
+  color: #1e293b;
+  font-weight: 600;
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.master-btn-neutral:hover {
+  background: #eef4fb;
+  color: #0f172a;
+}
+
+.master-btn-danger {
+  border: none;
+  background: #be123c;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.5rem 0.74rem;
+  border-radius: 0.65rem;
+}
+
+.master-btn-danger:hover,
+.master-btn-danger:focus,
+.master-btn-danger:active {
+  background: #9f1239;
+  color: #ffffff;
+}
+
+.master-table-wrap {
+  border: 1px solid #d8e2ee;
+  border-radius: 0.7rem;
+}
+
+.master-table {
+  margin: 0;
+}
+
+.master-table thead th {
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  color: #e2e8f0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-bottom: 1px solid #1e293b;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+
+.master-table tbody td {
+  font-size: 0.81rem;
+  color: #334155;
+  vertical-align: middle;
+  border-bottom-color: #e5ebf4;
+  word-break: break-word;
+}
+
+.master-table tbody tr:hover td {
+  background: #f8fbff;
+}
+
+.master-badge-active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.master-badge-warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.master-badge-inactive {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.master-icon-btn {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border-radius: 0.4rem;
+  margin-left: 0.22rem;
+}
+
+.master-icon-btn.edit {
+  border: 1px solid #bae6fd;
+  background: #ecfeff;
+  color: #0e7490;
+}
+
+.master-icon-btn.delete {
+  border: 1px solid #ffd2d2;
+  background: #fff5f5;
+  color: #be123c;
+}
+
+.master-form .form-label {
+  margin-bottom: 0.22rem;
+  font-size: 0.78rem;
+  color: #334155;
+  font-weight: 600;
+}
+
+.master-form .form-control,
+.master-form .form-select {
+  border-color: #d8e1ee;
+  font-size: 0.82rem;
+}
+
+.master-form .form-control:focus,
+.master-form .form-select:focus {
+  box-shadow: none;
+  border-color: #38bdf8;
+}
+
+.master-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.master-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  z-index: 2000;
+}
+
+.master-modal-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 2010;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.master-modal-card {
+  width: 100%;
+  max-width: 320px;
+  background: #ffffff;
+  border: 1px solid #d7e0ec;
+  border-radius: 0.9rem;
+  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.18);
+  padding: 1rem;
+  text-align: center;
+}
+
+.master-modal-icon {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 0.55rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #fff1f2;
+  color: #be123c;
+}
+
+.master-modal-card h5 {
+  margin: 0 0 0.2rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.master-modal-card p {
+  margin: 0;
+  font-size: 0.83rem;
+  color: #64748b;
+}
+
+.master-modal-actions {
+  margin-top: 0.9rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+@media (max-width: 768px) {
+  .master-card-header,
+  .master-card-body {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .master-search {
+    min-width: 170px;
+    width: 100%;
+  }
+
+  .master-select-label {
+    font-size: 0.75rem;
+  }
+}
