@@ -31,21 +31,21 @@
           <div class="col-12 col-md-4">
             <div class="input-group input-group-sm master-search">
               <span class="input-group-text"><i class="fa fa-search"></i></span>
-              <input type="text" class="form-control" placeholder="Search vehicle..." />
+              <input type="text" class="form-control" [(ngModel)]="searchTerm"  placeholder="Search vehicle..." />
             </div>
           </div>
 
           <div class="col-6 col-md-auto">
-            <button type="button" class="btn btn-sm master-btn-neutral w-100">
+            <button type="button" (click)="refresh()" title="refresh" class="btn btn-sm master-btn-neutral w-100">
               <i class="fa fa-refresh"></i>
-              <span>Refresh</span>
+              <span></span>
             </button>
           </div>
 
           <div class="col-6 col-md-auto ms-md-auto">
             <div class="d-flex align-items-center justify-content-md-end gap-2">
               <label class="master-select-label" for="itemsPerPage">Items Per Page</label>
-              <select id="itemsPerPage" class="form-select form-select-sm master-select">
+              <select id="itemsPerPage" [(ngModel)]="itemPerPage" class="form-select form-select-sm master-select">
                 <option value="10" selected>10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -70,7 +70,13 @@
               <th class="text-end">Action</th>
             </tr>
           </thead>
+
           <tbody>
+            @if (carDetailsRes().length === 0) {
+            <tr>
+              <td colspan="8" class="text-center py-4 text-muted">No Data Found</td>
+            </tr>
+            } @else {
             @for (item of carDetailsRes(); track $index) {
             <tr>
               <td>{{$index+1}}</td>
@@ -81,8 +87,6 @@
               <td>{{item.regNo ? item.regNo : '-'}}</td>
               <td>{{item.dailyRate ? item.dailyRate : '-'}}</td>
               <!-- <td>{{item.carImage ? item.carImage : '-'}}</td> -->
-
-
               <td class="text-end">
                 <button type="button" class="btn btn-sm master-icon-btn edit" (click)="editVehicle(item)"
                   aria-label="Edit">
@@ -95,7 +99,7 @@
               </td>
             </tr>
             }
-
+            }
           </tbody>
         </table>
       </div>

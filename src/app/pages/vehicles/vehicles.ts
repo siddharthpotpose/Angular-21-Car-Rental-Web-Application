@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, DestroyRef, signal } from '@angular/core';
 import { carModel } from '../../share/api-requestbody';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AllServices } from '../../share/all-services';
 import { ToastrService } from 'ngx-toastr';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-vehicles',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,FormsModule],
   templateUrl: './vehicles.html',
   styleUrl: './vehicles.css',
 })
@@ -15,10 +16,12 @@ export class Vehicles {
   showForm = false;
   isEditMode = false;
   showDeleteModal = false;
-
+  isTableLoading = false;
+  searchTerm = '';
+itemPerPage =10;
   carObj = new carModel();
   carDetailsRes = signal<any[]>([]);
-  constructor(private allServices: AllServices, private toaster: ToastrService) { }
+  constructor(private allServices: AllServices, private toaster: ToastrService, private destroy : DestroyRef) { }
 
   ngOnInit() {
     this.carDetails();
@@ -47,7 +50,7 @@ export class Vehicles {
     if (this.isEditMode) {
       // update
       console.log('Vehicle Data:', vehicleData);
-      this.allServices.UpdateCar(vehicleData).subscribe({
+      this.allServices.UpdateCar(vehicleData).pipe(takeUntilDestroyed(this.destroy)).subscribe({
         next: (res: any) => {
           this.toaster.success('vehicle updated successfully');
           this.onBackToList();
@@ -59,7 +62,7 @@ export class Vehicles {
     } else {
       // new entry
       vehicleData.CarId = 0;
-      this.allServices.createNewCar(vehicleData).subscribe({
+      this.allServices.createNewCar(vehicleData).pipe(takeUntilDestroyed(this.destroy)).subscribe({
         next: (res: any) => {
           console.log('Vehicle created successfully:', res);
           this.toaster.success('Vehicle Created Successfully');
@@ -78,11 +81,18 @@ export class Vehicles {
   }
 
   carDetails() {
-    this.allServices.GetCars().subscribe({
+    this.isTableLoading = true;
+    this.allServices.GetCars().pipe(takeUntilDestroyed(this.destroy)).subscribe({
       next: (res: any) => {
         console.log('car details', res.data);
-        this.carDetailsRes.set(res.data);
+        this.carDetailsRes.set(Array.isArray(res.data) ? res.data : []);
         console.log('car details res', this.carDetailsRes);
+        this.isTableLoading = false;
+      },
+      error: () => {
+        this.carDetailsRes.set([]);
+        this.isTableLoading = false;
+        this.toaster.error('Unable to load vehicles');
       }
     })
   }
@@ -136,7 +146,7 @@ export class Vehicles {
       return;
     }
 
-    this.allServices.DeleteCarbyCarId(this.selectedCarId).subscribe({
+    this.allServices.DeleteCarbyCarId(this.selectedCarId).pipe(takeUntilDestroyed(this.destroy)).subscribe({
       next:(res:any)=>{
         console.log('car deleted', res)
         this.toaster.success('car deleted successfully')
@@ -148,4 +158,11 @@ export class Vehicles {
       }
     })
   }
+
+  refresh(){
+    this.carDetails();
+    this.searchTerm ='';
+    this.itemPerPage = 10;
+  }
+
 }

@@ -7,4 +7,8 @@ export class apiNames {
     public static CreateNewCustomer = 'CreateNewCustomer';
     public static UpdateCustomer = 'UpdateCustomer';
     public static DeletCustomerById = 'DeletCustomerById';
+    public static CreateNewBooking = 'CreateNewBooking';
+    public static geAllBookings = 'geAllBookings';
+    public static DeletBookingById = 'DeletBookingById';
+    public static GetDashboardData = 'GetDashboardData';
 }

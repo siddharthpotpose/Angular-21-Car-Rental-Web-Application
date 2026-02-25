@@ -1,1 +1,237 @@
-<p>booking works!</p>
+<div class="master-ui-wrap">
+    <section class="master-card">
+        <div class="master-card-header">
+            <div>
+                <h3 class="master-title">Booking Master Component</h3>
+                <p class="master-subtitle">Professional and compact static Booking management interface</p>
+            </div>
+
+            @if(!showForm){
+            <button type="button" class="btn-sm master-btn-primary" (click)="onAddBoking()">
+                <i class="fa fa-plus"></i>
+                <span>Add Booking</span>
+            </button>
+            }@else{
+            <button type="button" class=" btn-sm master-btn-neutral" (click)="onBackToList()">
+                <i class="fa fa-arrow-left"></i>
+                <span>Back To Details</span>
+            </button>
+
+            }
+
+
+
+
+        </div>
+
+        @if(!showForm){
+        <div class="master-card-body">
+            <div class="master-toolbar">
+                <div class="row g-2 align-items-center w-100 master-toolbar-row">
+                    <div class="col-12 col-md-4">
+                        <div class="input-group input-group-sm master-search">
+                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                            <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search Booking..." />
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-auto">
+                        <button type="button" (click)="refresh()" class="btn btn-sm master-btn-neutral w-100">
+                            <i class="fa fa-refresh"></i>
+                            <span></span>
+                        </button>
+                    </div>
+
+                    <div class="col-6 col-md-auto ms-md-auto">
+                        <div class="d-flex align-items-center justify-content-md-end gap-2">
+                            <label class="master-select-label" for="itemsPerPage">Items Per Page</label>
+                            <select id="itemsPerPage" [(ngModel)]="itemPerPage" class="form-select form-select-sm master-select">
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive master-table-wrap">
+                <table class="table table-hover align-middle master-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>customer Name</th>
+                            <th>mobile No</th>
+                            <th>booking Date</th>
+                            <th>brand</th>
+                            <th>Model</th>
+                            <th>totalBillAmount</th>
+                            <th>discount</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of detailsRes(); track $index) {
+                        <tr>
+                            <td>{{$index+1}}</td>
+                            <td>{{item.customerName ? item.customerName : '-'}}</td>
+                            <td>{{item.mobileNo ? item.mobileNo : '-'}}</td>
+                            <td>{{item.bookingDate ? item.bookingDate : '-'}}</td>
+                            <td>{{item.brand ? item.brand : '-'}}</td>
+                            <td>{{item.model ? item.model : '-'}}</td>
+                            <td>{{item.totalBillAmount ? item.totalBillAmount : '-'}}</td>
+                            <td>{{item.discount ? item.discount : '-'}}</td>
+
+
+                            <td class="text-end">
+                                <!-- <button type="button" class="btn btn-sm master-icon-btn edit"
+                                    (click)="editBooking(item)" aria-label="Edit">
+                                    <i class="fa fa-pencil"></i>
+                                </button> -->
+                                <button type="button" class="btn btn-sm master-icon-btn delete" (click)="openDeleteModal(item.bookingId)"
+                  aria-label="Delete">
+                  <i class="fa fa-trash"></i>
+                </button>
+                            </td>
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        }
+
+        @else {
+        <div class="master-card-body">
+            <form [formGroup]="bookingForm" class="master-form">
+                <div class="row g-2">
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label">CustomerName</label>
+                        <input type="text" formControlName="CustomerName" required class="form-control form-control-sm"
+                            placeholder="Enter CustomerName" />
+                        @if(bookingForm.get('CustomerName')?.touched && bookingForm.get('CustomerName')?.invalid){
+                        @if(bookingForm.get('CustomerName')?.errors?.['required']){
+                        <div class="text-danger">CustomerName is required</div>
+                        }
+                        }
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label">CustomerCity</label>
+                        <input type="text" formControlName="CustomerCity" required class="form-control form-control-sm"
+                            placeholder="Enter CustomerCity" />
+                        @if(bookingForm.get('CustomerCity')?.touched && bookingForm.get('CustomerCity')?.invalid){
+                        @if(bookingForm.get('CustomerCity')?.errors?.['required']){
+                        <div class="text-danger">CustomerCity is required</div>
+                        }
+                        }
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label">Email</label>
+                        <input type="text" formControlName="Email" required class="form-control form-control-sm"
+                            placeholder="Enter Email" />
+                        @if(bookingForm.get('Email')?.touched && bookingForm.get('Email')?.invalid){
+                        @if(bookingForm.get('Email')?.errors?.['required']){
+                        <div class="text-danger">Email is required</div>
+                        }
+                        }
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label">MobileNo</label>
+                        <input type="number" formControlName="MobileNo" required="" class="form-control form-control-sm"
+                            placeholder="Enter MobileNo" />
+                        @if(bookingForm.get('MobileNo')?.touched && bookingForm.get('MobileNo')?.invalid){
+                        @if(bookingForm.get('MobileNo')?.errors?.['required']){
+                        <div class="text-danger">MobileNo is required</div>
+                        }
+                        }
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label">Booking Date</label>
+                        <input formControlName="BookingDate" class="form-control form-control-sm"
+                            ngxDaterangepickerBootstrap [singleDatePicker]="true" [minDate]="minSelectableDate"
+                            [locale]="datePickerLocale" placeholder="Select Booking Date" />
+                        @if(bookingForm.get('BookingDate')?.touched && bookingForm.get('BookingDate')?.invalid){
+                        @if(bookingForm.get('BookingDate')?.errors?.['required']){
+                        <div class="text-danger">BookingDate is required</div>
+                        }
+                        }
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label">Select Car</label>
+                        <!-- <input type="text" formControlName="CarId" class="form-control form-control-sm"
+                            placeholder="Enter CarId" /> -->
+                        <select formControlName="CarId" class="form-control" required>
+                            @for (item of GetCarsDetails(); track $index) {
+                            <option [value]="item.carId">{{item.brand}}</option>
+                            }
+                        </select>
+                        @if(bookingForm.get('CarId')?.touched && bookingForm.get('CarId')?.invalid){
+                        @if(bookingForm.get('CarId')?.errors?.['required']){
+                        <div class="text-danger">car selection is required</div>
+                        }
+                        }
+                    </div>
+
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label">Discount</label>
+                        <input type="text" formControlName="Discount" class="form-control form-control-sm"
+                            placeholder="Enter image URL/path" />
+                        @if(bookingForm.get('Discount')?.touched && bookingForm.get('Discount')?.invalid){
+                        @if(bookingForm.get('Discount')?.errors?.['required']){
+                        <div class="text-danger">Discount is required</div>
+                        }
+                        }
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label class="form-label">Total Bill Amount</label>
+                        <input type="text" formControlName="TotalBillAmount" class="form-control form-control-sm"
+                            placeholder="Enter Total Bill Amount" />
+                        @if(bookingForm.get('TotalBillAmount')?.touched && bookingForm.get('TotalBillAmount')?.invalid){
+                        @if(bookingForm.get('TotalBillAmount')?.errors?.['required']){
+                        <div class="text-danger">TotalBillAmount is required</div>
+                        }
+                        }
+                    </div>
+                </div>
+
+                <div class="master-form-actions">
+                    <button type="reset" class="btn btn-sm master-btn-neutral">
+                        <i class="fa fa-times"></i>
+                        <span>Cancel</span>
+                    </button>
+                    <button type="button" class=" btn-sm master-btn-primary" (click)="submitForm()">
+                        <i class="fa fa-floppy-o"></i>
+                        <span>Save Booking</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        }
+
+        
+    @if(showDeleteModal){
+    <div class="master-modal-backdrop" (click)="closeDeleteModal()"></div>
+    <div class="master-modal-wrap" role="dialog" aria-modal="true" aria-label="Delete confirmation">
+      <div class="master-modal-card">
+        <div class="master-modal-icon">
+          <i class="fa fa-trash"></i>
+        </div>
+        <h5>Delete Booking</h5>
+        <p>Are you sure, do you want to delete this?</p>
+        <div class="master-modal-actions">
+          <button type="button" class="btn btn-sm master-btn-neutral" (click)="closeDeleteModal()">No</button>
+          <button type="button" class="btn btn-sm master-btn-danger" (click)="confirmDeleteStatic()">Yes</button>
+        </div>
+      </div>
+    </div>
+    }
+
+
+    </section>
+</div>

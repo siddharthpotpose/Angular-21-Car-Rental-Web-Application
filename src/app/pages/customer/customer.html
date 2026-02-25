@@ -31,21 +31,21 @@
           <div class="col-12 col-md-4">
             <div class="input-group input-group-sm master-search">
               <span class="input-group-text"><i class="fa fa-search"></i></span>
-              <input type="text" class="form-control" placeholder="Search vehicle..." />
+              <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search vehicle..." />
             </div>
           </div>
 
           <div class="col-6 col-md-auto">
-            <button type="button" class="btn btn-sm master-btn-neutral w-100">
+            <button type="button" (click)="refresh()" class="btn btn-sm master-btn-neutral w-100">
               <i class="fa fa-refresh"></i>
-              <span>Refresh</span>
+              <span></span>
             </button>
           </div>
 
           <div class="col-6 col-md-auto ms-md-auto">
             <div class="d-flex align-items-center justify-content-md-end gap-2">
               <label class="master-select-label" for="itemsPerPage">Items Per Page</label>
-              <select id="itemsPerPage" class="form-select form-select-sm master-select">
+              <select id="itemsPerPage" [(ngModel)]="itemPerPage" class="form-select form-select-sm master-select">
                 <option value="10" selected>10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
@@ -69,6 +69,11 @@
             </tr>
           </thead>
           <tbody>
+          @if(customerDataRes().length === 0){
+            <tr>
+              <td colspan="6" class="text-center py-4 text-muted">No Data Found</td>
+            </tr>
+            }@else {
             @for (item of customerDataRes(); track $index) {
             <tr>
               <td>{{$index+1}}</td>
@@ -81,13 +86,15 @@
                   aria-label="Edit">
                   <i class="fa fa-pencil"></i>
                 </button>
-                <button type="button" class="btn btn-sm master-icon-btn delete" (click)="openDeleteModal(item.customerId)"
-                  aria-label="Delete">
+                <button type="button" class="btn btn-sm master-icon-btn delete"
+                  (click)="openDeleteModal(item.customerId)" aria-label="Delete">
                   <i class="fa fa-trash"></i>
                 </button>
               </td>
             </tr>
             }
+            }
+
 
           </tbody>
         </table>
@@ -123,27 +130,26 @@
 
           <div class="col-12 col-md-6 col-lg-4">
             <label class="form-label">Mobile No</label>
-            <input type="number" formControlName="MobileNo" [maxlength]="10" [minlength]="10" required class="form-control form-control-sm"
-              placeholder="Enter MobileNo" />
+            <input type="number" formControlName="MobileNo" [maxlength]="10" [minlength]="10" required
+              class="form-control form-control-sm" placeholder="Enter MobileNo" />
             @if(customerForm.get('MobileNo')?.touched && customerForm.get('MobileNo')?.invalid){
             @if(customerForm.get('MobileNo')?.errors?.['required']){
             <div class="text-danger">MobileNo is required</div>
             }
             }
           </div>
-        
+
 
           <div class="col-12 col-md-6 col-lg-4">
             <label class="form-label">Email</label>
-            <input type="text" formControlName="Email" class="form-control form-control-sm"
-              placeholder="Enter Email" />
+            <input type="text" formControlName="Email" class="form-control form-control-sm" placeholder="Enter Email" />
             @if(customerForm.get('Email')?.touched && customerForm.get('Email')?.invalid){
             @if(customerForm.get('Email')?.errors?.['required']){
             <div class="text-danger">Email is required</div>
             }
             }
           </div>
-          
+
         </div>
 
         <div class="master-form-actions">

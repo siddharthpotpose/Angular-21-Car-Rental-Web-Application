@@ -1,5 +1,6 @@
-import { Component, HostListener } from '@angular/core';
-import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
+import { Component, HostListener, inject } from '@angular/core';
+import { RouterOutlet, RouterLinkWithHref, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-layout',
@@ -11,6 +12,9 @@ export class Layout {
   isSidebarCollapsed = false;
   isMobileSidebarOpen = false;
   readonly mobileBreakpoint = 991;
+
+   router = inject(Router)
+   toaster = inject(ToastrService)
 
   toggleSidebar(): void {
     if (this.isMobileView()) {
@@ -35,4 +39,15 @@ export class Layout {
   private isMobileView(): boolean {
     return typeof window !== 'undefined' && window.innerWidth <= this.mobileBreakpoint;
   }
+
+  userName = sessionStorage.getItem('email')
+
+  logout(){
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('pswd');
+    this.router.navigateByUrl('/login');
+    this.toaster.success('logout successfully');
+
+  }
+
 }

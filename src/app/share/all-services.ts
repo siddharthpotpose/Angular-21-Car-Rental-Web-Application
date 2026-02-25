@@ -41,20 +41,39 @@ export class AllServices {
     return this.http.post(`${environment.apiUrl}/${apiNames.CreateNewCustomer}`, requestBody)
   }
 
-  UpdateCustomer(requestBody:any){
-  return this.http.put(`${environment.apiUrl}/${apiNames.UpdateCustomer}`,requestBody)
+  UpdateCustomer(requestBody: any) {
+    return this.http.put(`${environment.apiUrl}/${apiNames.UpdateCustomer}`, requestBody)
   }
 
-  DeleteCustomerById(customerId : number | string){
-  const id = Number(customerId);
-  return this.http.delete(`${environment.apiUrl}/${apiNames.DeletCustomerById}`,{
-    params : {id: String(id)}
-  })
+  DeleteCustomerById(customerId: number | string) {
+    const id = Number(customerId);
+    return this.http.delete(`${environment.apiUrl}/${apiNames.DeletCustomerById}`, {
+      params: { id: String(id) }
+    })
   }
 
 
+  //  boking master
+
+  CreateNewBooking(requestBody: any) {
+    return this.http.post(`${environment.apiUrl}/${apiNames.CreateNewBooking}`, requestBody)
+  }
+
+  geAllBookings() {
+    return this.http.get(`${environment.apiUrl}/${apiNames.geAllBookings}`)
+  }
+
+  DeletBookingById(bookingId: any) {
+    const id = Number(bookingId);
+    return this.http.delete(`${environment.apiUrl}/${apiNames.DeletBookingById}`, {
+      params: { id: String(id) }
+    })
+  }
 
 
+  GetDashboardData(){
+    return this.http.get(`${environment.apiUrl}/${apiNames.GetDashboardData}`)
+  }
 
 
 

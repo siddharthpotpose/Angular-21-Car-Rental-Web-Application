@@ -1,7 +1,180 @@
-<section class="page-card">
-    <h3>Welcome, Admin</h3>
-    <p>
-        This is a static, responsive admin layout template with sidebar, navbar, and content area.
-        You can now place your dashboard widgets and routed pages here.
-    </p>
+<section class="dashboard-wrap">
+  <header class="dash-header">
+    <div>
+      <h2>Operations Dashboard</h2>
+      <p>Compact overview of bookings, fleet health and daily activity</p>
+    </div>
+    <span class="dash-chip">Static Demo Data</span>
+  </header>
+
+  <div class="kpi-grid">
+    @for (card of kpis; track trackByIndex($index)) {
+    <article class="kpi-card">
+      <div class="kpi-title-row">
+        <span class="kpi-title">{{ card.title }}</span>
+        <i class="fa" [class]="card.icon"></i>
+      </div>
+      <h3>{{ card.value }}</h3>
+      <p class="kpi-delta" [class.up]="card.trend === 'up'" [class.down]="card.trend === 'down'">
+        {{ card.delta }}
+      </p>
+    </article>
+    }
+  </div>
+
+  <div class="dash-main-grid">
+    <article class="dash-card compact">
+      <h4>Booking Snapshot</h4>
+      <div class="snapshot-grid">
+        @for (item of bookingSnapshot; track trackByIndex($index)) {
+        <div class="mini-count" [class.active]="item.tone === 'active'" [class.warning]="item.tone === 'warning'">
+          <span>{{ item.label }}</span>
+          <strong>{{ item.count }}</strong>
+        </div>
+        }
+      </div>
+    </article>
+
+    <article class="dash-card compact">
+      <h4>Fleet Highlights</h4>
+      <div class="metric-list">
+        @for (metric of fleetMetrics; track trackByIndex($index)) {
+        <div class="metric-item">
+          <div>
+            <p>{{ metric.title }}</p>
+            <small>{{ metric.helper }}</small>
+          </div>
+          <strong>{{ metric.value }}</strong>
+        </div>
+        }
+      </div>
+    </article>
+
+    <article class="dash-card table-card">
+      <div class="section-head">
+        <h4>Upcoming Pickups</h4>
+        <span>Next 4</span>
+      </div>
+      <div class="mini-table-wrap">
+        <table class="mini-table">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Car</th>
+              <th>Slot</th>
+              <th>City</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of upcomingBookings; track trackByIndex($index)) {
+            <tr>
+              <td>{{ row.customer }}</td>
+              <td>{{ row.car }}</td>
+              <td>{{ row.date }}</td>
+              <td>{{ row.city }}</td>
+              <td>
+                <span class="status-tag" [class.pending]="row.status === 'Pending'"
+                  [class.ready]="row.status === 'Ready'">
+                  {{ row.status }}
+                </span>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="dash-card compact">
+      <div class="section-head">
+        <h4>Recent Activity</h4>
+        <span>Live Feed</span>
+      </div>
+      <ul class="activity-list">
+        @for (item of activities; track trackByIndex($index)) {
+        <li>
+          <p>{{ item.text }}</p>
+          <small>{{ item.time }}</small>
+        </li>
+        }
+      </ul>
+    </article>
+  </div>
+
+  <article class="dash-card booking-table-card">
+    <div class="section-head">
+      <h4>All Bookings</h4>
+      <span>Static Data</span>
+    </div>
+    <!-- <div class="table-responsive">
+      <table class="table table-sm table-hover align-middle mb-0 dashboard-booking-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Customer Name</th>
+            <th>Mobile No</th>
+            <th>Booking Date</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Total Bill Amount</th>
+            <th>Discount</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of allBookings; track trackByIndex($index)) {
+          <tr>
+            <td>{{ $index + 1 }}</td>
+            <td>{{ row.customerName }}</td>
+            <td>{{ row.mobileNo }}</td>
+            <td>{{ row.bookingDate }}</td>
+            <td>{{ row.brand }}</td>
+            <td>{{ row.model }}</td>
+            <td>{{ row.totalBillAmount }}</td>
+            <td>{{ row.discount }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div> -->
+
+    <div class="table-responsive master-table-wrap">
+      <table class="table table-hover align-middle master-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>customer Name</th>
+            <th>mobile No</th>
+            <th>booking Date</th>
+            <th>brand</th>
+            <th>Model</th>
+            <th>totalBillAmount</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if(getAllBookingData().length === 0){
+          <tr>
+            <td colspan="7" class="text-center no-data-cell">No Data Found</td>
+          </tr>
+          }@else{
+          @for (item of getAllBookingData(); track $index) {
+          <tr>
+            <td data-label="#">{{$index+1}}</td>
+            <td data-label="Customer Name">{{item.customerName ? item.customerName : '-'}}</td>
+            <td data-label="Mobile No">{{item.mobileNo ? item.mobileNo : '-'}}</td>
+            <td data-label="Booking Date">{{item.bookingDate ? item.bookingDate : '-'}}</td>
+            <td data-label="Brand">{{item.brand ? item.brand : '-'}}</td>
+            <td data-label="Model">{{item.model ? item.model : '-'}}</td>
+            <td data-label="Total Bill">{{item.totalBillAmount ? item.totalBillAmount : '-'}}</td>
+          </tr>
+          }
+          }
+
+
+        </tbody>
+      </table>
+    </div>
+
+
+  </article>
 </section>
